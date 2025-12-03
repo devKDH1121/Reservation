@@ -24,16 +24,19 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/api/users/list").hasRole("ADMIN")
                         .requestMatchers(
-                                "/join",
+                                "/api/users/join",
                                 "/",
                                 "/login",
                                 "/loginform",
+
                                 "/css/**",
                                 "/js/**",
                                 "/images/**",
                                 "/static/**"
-                        ).permitAll()
+                        )
+                        .permitAll()
                         .anyRequest().authenticated())
 
                 //로그인
