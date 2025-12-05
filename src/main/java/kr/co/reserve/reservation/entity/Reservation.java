@@ -20,8 +20,9 @@ public class Reservation extends BaseTimeEntity{
     @Column(nullable = false)
     private LocalDateTime endTime;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private ReservationStatus status;
 
     @Column(nullable = false)
     private int total_price;
@@ -33,8 +34,10 @@ public class Reservation extends BaseTimeEntity{
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // 자원:예약(1:N)
+    // 장소:예약(1:N)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resource_id", nullable = false)
     private Resource resource;
+
+
 }
