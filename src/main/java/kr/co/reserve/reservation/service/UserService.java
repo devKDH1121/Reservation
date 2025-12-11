@@ -127,5 +127,13 @@ public class UserService implements UserDetailsService {
 
         return user.getUserId();
     }
+    // 내 정보 보기
+    @Transactional(readOnly = true)
+    public UserResponseDTO findUserByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자 ID를 찾을 수 없습니다."));
+
+        return new UserResponseDTO(user);
+    }
 
 }

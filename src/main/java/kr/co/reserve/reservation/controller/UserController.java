@@ -60,4 +60,11 @@ public class UserController {
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
+    // 내 정보 보기
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getCurrentUser(Principal principal) {
+        UserResponseDTO user = userService.findUserByUsername(principal.getName());
+
+        return ResponseEntity.ok(user);
+    }
 }
