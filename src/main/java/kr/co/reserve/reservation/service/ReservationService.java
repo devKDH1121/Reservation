@@ -42,7 +42,7 @@ public class ReservationService {
     @Transactional(readOnly = true)
     public List<ReservationResponseDTO> getMyReservations(Long currentUserId) {
 
-        return reservationRepository.findByUserId(currentUserId).stream()
+        return reservationRepository.findByUserUserId(currentUserId).stream()
                 .map(ReservationResponseDTO::new)
                 .collect(Collectors.toList());
     }
@@ -126,7 +126,7 @@ public class ReservationService {
         reservation.setTotal_price(newTotalPrice);
 
         // 장소 ID가 변경되었을 경우
-        if(!reservation.getResource().getResourceId().equals(resource.getResourceId())) {
+        if(!reservation.getResource().getResourceId().equals(requestDTO.getResourceId())) {
             Resource newResource = resourceRepository.findById(requestDTO.getResourceId()).
                     orElseThrow(() ->  new NoSuchElementException("새 예약 대상 장소를 찾을 수 없습니다."));
             reservation.setResource(newResource);

@@ -29,6 +29,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             );
 
     // 나의 예약 목록 조회
-    List<Reservation> findByUserId(Long userId);
+    List<Reservation> findByUserUserId(Long userId);
 
 }
