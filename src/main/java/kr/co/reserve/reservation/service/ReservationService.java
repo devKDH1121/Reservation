@@ -96,7 +96,7 @@ public class ReservationService {
             throw new IllegalStateException("이미 시작된 예약은 수정할 수 없습니다.");
         }
         // 시간 유효성
-        if(reservation.getEndTime().isBefore(requestDTO.getStartTime()) || requestDTO.getEndTime().equals(requestDTO.getStartTime())) {
+        if(requestDTO.getEndTime().isBefore(requestDTO.getStartTime()) || requestDTO.getEndTime().equals(requestDTO.getStartTime())) {
             throw new IllegalStateException("종료 시간은 시작 시간 이후여야 합니다.");
         }
 
@@ -116,7 +116,7 @@ public class ReservationService {
         }
 
         // 금액 재계샨
-        long durationMinutes = Duration.between(requestDTO.getStartTime(), reservation.getEndTime()).toMinutes();
+        long durationMinutes = Duration.between(requestDTO.getStartTime(), requestDTO.getEndTime()).toMinutes();
         double totalHours = durationMinutes / 60.0;
         int newTotalPrice = (int) Math.ceil(totalHours) * resource.getPrice();
 
@@ -135,7 +135,7 @@ public class ReservationService {
         return new  ReservationResponseDTO(reservation);
     }
     // 예약 삭제
-    public ReservationResponseDTO deleteReservation(Long reservationId, Long currentUserID) {
+    public void deleteReservation(Long reservationId, Long currentUserID) {
 
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new NoSuchElementException("삭제할 예약이 없습니다."));
@@ -155,7 +155,6 @@ public class ReservationService {
 
         reservation.setStatus(ReservationStatus.CANCEL);
 
-        return new  ReservationResponseDTO(reservation);
     }
 
 
