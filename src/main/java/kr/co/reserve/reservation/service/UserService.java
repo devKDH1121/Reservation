@@ -120,4 +120,12 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll().stream().map(UserResponseDTO::new).collect(Collectors.toList());
     }
 
+    public Long findIdByUsername(String username) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자 ID를 찾을 수 없습니다."));
+
+        return user.getUserId();
+    }
+
 }

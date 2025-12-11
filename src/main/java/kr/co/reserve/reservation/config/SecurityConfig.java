@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.util.AntPathMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -35,8 +36,7 @@ public class SecurityConfig {
                                 "/js/**",
                                 "/images/**",
                                 "/static/**"
-                        )
-                        .permitAll()
+                        ).permitAll()
                         .anyRequest().authenticated())
 
                 //로그인

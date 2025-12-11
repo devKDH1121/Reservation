@@ -38,6 +38,14 @@ public class ReservationService {
 
         return new ReservationResponseDTO(reservation);
     }
+    // 내 예약 조회
+    @Transactional(readOnly = true)
+    public List<ReservationResponseDTO> getMyReservations(Long currentUserId) {
+
+        return reservationRepository.findByUserId(currentUserId).stream()
+                .map(ReservationResponseDTO::new)
+                .collect(Collectors.toList());
+    }
 
     // 예약 등록
     public ReservationResponseDTO createReservation(ReservationRequestDTO requestDTO, Long currentUserId) {
@@ -149,5 +157,8 @@ public class ReservationService {
 
         return new  ReservationResponseDTO(reservation);
     }
+
+
+
 
 }
